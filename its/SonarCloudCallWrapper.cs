@@ -20,7 +20,7 @@ namespace AzureDevOpsExtension.IntegrationTests
         {
             var httpClient = new HttpClient()
             {
-                BaseAddress = new Uri("https://sonarcloud.io"),
+                BaseAddress = new Uri(Constants.SONARCLOUD_BASE_URL),
             };
 
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {GetBase64EncodedToken()}");

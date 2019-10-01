@@ -104,8 +104,8 @@ namespace AzureDevOpsExtension.IntegrationTests
             var ncloc = await scInstance.GetNclocForProjectAsync(Constants.SC_MAVEN_PROJECT_KEY);
             var coverage = await scInstance.GetCodeCoveragePercentageForProjectAsync(Constants.SC_MAVEN_PROJECT_KEY);
 
-            Assert.AreEqual(178, ncloc);
-            Assert.AreEqual(22.5, coverage);
+            Assert.AreEqual(212, ncloc);
+            Assert.AreEqual(23.1, coverage);
         }
 
         [TestMethod]
