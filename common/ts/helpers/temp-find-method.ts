@@ -1,23 +1,23 @@
 /* istanbul ignore file */
 /*Can be deleted once https://www.npmjs.com/package/azure-pipelines-task-lib v3.1.0 will be release */
-import * as tl from 'azure-pipelines-task-lib/task';
-import path = require('path');
-import fs = require('fs');
-import im = require('azure-pipelines-task-lib/internal');
-import minimatch = require('minimatch');
+import * as tl from "azure-pipelines-task-lib/task";
+import path = require("path");
+import fs = require("fs");
+import im = require("azure-pipelines-task-lib/internal");
+import minimatch = require("minimatch");
 
 function _debugMatchOptions(options: tl.MatchOptions): void {
-  tl.debug(`matchOptions.debug: '${options.debug}'`);
-  tl.debug(`matchOptions.nobrace: '${options.nobrace}'`);
-  tl.debug(`matchOptions.noglobstar: '${options.noglobstar}'`);
-  tl.debug(`matchOptions.dot: '${options.dot}'`);
-  tl.debug(`matchOptions.noext: '${options.noext}'`);
-  tl.debug(`matchOptions.nocase: '${options.nocase}'`);
-  tl.debug(`matchOptions.nonull: '${options.nonull}'`);
-  tl.debug(`matchOptions.matchBase: '${options.matchBase}'`);
-  tl.debug(`matchOptions.nocomment: '${options.nocomment}'`);
-  tl.debug(`matchOptions.nonegate: '${options.nonegate}'`);
-  tl.debug(`matchOptions.flipNegate: '${options.flipNegate}'`);
+  tl.debug(`matchOptions.debug: "${options.debug}"`);
+  tl.debug(`matchOptions.nobrace: "${options.nobrace}"`);
+  tl.debug(`matchOptions.noglobstar: "${options.noglobstar}"`);
+  tl.debug(`matchOptions.dot: "${options.dot}"`);
+  tl.debug(`matchOptions.noext: "${options.noext}"`);
+  tl.debug(`matchOptions.nocase: "${options.nocase}"`);
+  tl.debug(`matchOptions.nonull: "${options.nonull}"`);
+  tl.debug(`matchOptions.matchBase: "${options.matchBase}"`);
+  tl.debug(`matchOptions.nocomment: "${options.nocomment}"`);
+  tl.debug(`matchOptions.nonegate: "${options.nonegate}"`);
+  tl.debug(`matchOptions.flipNegate: "${options.flipNegate}"`);
 }
 
 function _getDefaultMatchOptions(): tl.MatchOptions {
@@ -27,7 +27,7 @@ function _getDefaultMatchOptions(): tl.MatchOptions {
     noglobstar: false,
     dot: true,
     noext: false,
-    nocase: process.platform == 'win32',
+    nocase: process.platform == "win32",
     nonull: false,
     matchBase: false,
     nocomment: false,
@@ -37,9 +37,9 @@ function _getDefaultMatchOptions(): tl.MatchOptions {
 }
 
 function _debugFindOptions(options: tl.FindOptions): void {
-  tl.debug(`findOptions.allowBrokenSymbolicLinks: '${options.allowBrokenSymbolicLinks}'`);
-  tl.debug(`findOptions.followSpecifiedSymbolicLink: '${options.followSpecifiedSymbolicLink}'`);
-  tl.debug(`findOptions.followSymbolicLinks: '${options.followSymbolicLinks}'`);
+  tl.debug(`findOptions.allowBrokenSymbolicLinks: "${options.allowBrokenSymbolicLinks}"`);
+  tl.debug(`findOptions.followSpecifiedSymbolicLink: "${options.followSpecifiedSymbolicLink}"`);
+  tl.debug(`findOptions.followSymbolicLinks: "${options.followSymbolicLinks}"`);
 }
 
 function _getDefaultFindOptions(): tl.FindOptions {
@@ -59,7 +59,7 @@ function _getDefaultFindOptions(): tl.FindOptions {
  * @param  defaultRoot   default path to root unrooted patterns. falls back to System.DefaultWorkingDirectory or process.cwd().
  * @param  patterns      pattern or array of patterns to apply
  * @param  findOptions   defaults to { followSymbolicLinks: true }. following soft links is generally appropriate unless deleting files.
- * @param  matchOptions  defaults to { dot: true, nobrace: true, nocase: process.platform == 'win32' }
+ * @param  matchOptions  defaults to { dot: true, nobrace: true, nocase: process.platform == "win32" }
  */
 export function findMatch(
   defaultRoot: string,
@@ -68,10 +68,10 @@ export function findMatch(
   matchOptions?: tl.MatchOptions
 ): string[] {
   // apply defaults for parameters and trace
-  defaultRoot = defaultRoot || tl.getVariable('system.defaultWorkingDirectory') || process.cwd();
-  tl.debug(`defaultRoot: '${defaultRoot}'`);
+  defaultRoot = defaultRoot || tl.getVariable("system.defaultWorkingDirectory") || process.cwd();
+  tl.debug(`defaultRoot: "${defaultRoot}"`);
   patterns = patterns || [];
-  patterns = typeof patterns == 'string' ? ([patterns] as string[]) : patterns;
+  patterns = typeof patterns == "string" ? ([patterns] as string[]) : patterns;
   findOptions = findOptions || _getDefaultFindOptions();
   _debugFindOptions(findOptions);
   matchOptions = matchOptions || _getDefaultMatchOptions();
@@ -83,12 +83,12 @@ export function findMatch(
   let results: { [key: string]: string } = {};
   let originalMatchOptions = matchOptions;
   for (let pattern of patterns || []) {
-    tl.debug(`pattern: '${pattern}'`);
+    tl.debug(`pattern: "${pattern}"`);
 
     // trim and skip empty
-    pattern = (pattern || '').trim();
+    pattern = (pattern || "").trim();
     if (!pattern) {
-      tl.debug('skipping empty pattern');
+      tl.debug("skipping empty pattern");
       continue;
     }
 
@@ -96,24 +96,24 @@ export function findMatch(
     let matchOptions = im._cloneMatchOptions(originalMatchOptions);
 
     // skip comments
-    if (!matchOptions.nocomment && im._startsWith(pattern, '#')) {
-      tl.debug('skipping comment');
+    if (!matchOptions.nocomment && im._startsWith(pattern, "#")) {
+      tl.debug("skipping comment");
       continue;
     }
 
-    // set nocomment - brace expansion could result in a leading '#'
+    // set nocomment - brace expansion could result in a leading "#"
     matchOptions.nocomment = true;
 
     // determine whether pattern is include or exclude
     let negateCount = 0;
     if (!matchOptions.nonegate) {
-      while (pattern.charAt(negateCount) == '!') {
+      while (pattern.charAt(negateCount) == "!") {
         negateCount++;
       }
 
-      pattern = pattern.substring(negateCount); // trim leading '!'
+      pattern = pattern.substring(negateCount); // trim leading "!"
       if (negateCount) {
-        tl.debug(`trimmed leading '!'. pattern: '${pattern}'`);
+        tl.debug(`trimmed leading "!". pattern: "${pattern}"`);
       }
     }
 
@@ -122,7 +122,7 @@ export function findMatch(
       (negateCount % 2 == 0 && !matchOptions.flipNegate) ||
       (negateCount % 2 == 1 && matchOptions.flipNegate);
 
-    // set nonegate - brace expansion could result in a leading '!'
+    // set nonegate - brace expansion could result in a leading "!"
     matchOptions.nonegate = true;
     matchOptions.flipNegate = false;
 
@@ -134,8 +134,8 @@ export function findMatch(
     } else {
       // convert slashes on Windows before calling braceExpand(). unfortunately this means braces cannot
       // be escaped on Windows, this limitation is consistent with current limitations of minimatch (3.0.3).
-      tl.debug('expanding braces');
-      let convertedPattern = process.platform == 'win32' ? pattern.replace(/\\/g, '/') : pattern;
+      tl.debug("expanding braces");
+      let convertedPattern = process.platform == "win32" ? pattern.replace(/\\/g, "/") : pattern;
       expanded = (minimatch as any).braceExpand(convertedPattern);
     }
 
@@ -144,13 +144,13 @@ export function findMatch(
 
     for (let pattern of expanded) {
       if (expanded.length != 1 || pattern != preExpanded) {
-        tl.debug(`pattern: '${pattern}'`);
+        tl.debug(`pattern: "${pattern}"`);
       }
 
       // trim and skip empty
-      pattern = (pattern || '').trim();
+      pattern = (pattern || "").trim();
       if (!pattern) {
-        tl.debug('skipping empty pattern');
+        tl.debug("skipping empty pattern");
         continue;
       }
 
@@ -162,15 +162,15 @@ export function findMatch(
           matchOptions
         );
         let findPath: string = findInfo.findPath;
-        tl.debug(`findPath: '${findPath}'`);
+        tl.debug(`findPath: "${findPath}"`);
 
         if (!findPath) {
-          tl.debug('skipping empty path');
+          tl.debug("skipping empty path");
           continue;
         }
 
         // perform the find
-        tl.debug(`statOnly: '${findInfo.statOnly}'`);
+        tl.debug(`statOnly: "${findInfo.statOnly}"`);
         let findResults: string[] = [];
         if (findInfo.statOnly) {
           // simply stat the path - all path segments were used to build the path
@@ -178,11 +178,11 @@ export function findMatch(
             fs.statSync(findPath);
             findResults.push(findPath);
           } catch (err) {
-            if (err.code != 'ENOENT') {
+            if (err.code != "ENOENT") {
               throw err;
             }
 
-            tl.debug('ENOENT');
+            tl.debug("ENOENT");
           }
         } else {
           findResults = find(findPath, findOptions);
@@ -191,18 +191,18 @@ export function findMatch(
         tl.debug(`found ${findResults.length} paths`);
 
         // apply the pattern
-        tl.debug('applying include pattern');
+        tl.debug("applying include pattern");
         if (findInfo.adjustedPattern != pattern) {
-          tl.debug(`adjustedPattern: '${findInfo.adjustedPattern}'`);
+          tl.debug(`adjustedPattern: "${findInfo.adjustedPattern}"`);
           pattern = findInfo.adjustedPattern;
         }
 
         let matchResults: string[] = minimatch.match(findResults, pattern, matchOptions);
-        tl.debug(matchResults.length + ' matches');
+        tl.debug(matchResults.length + " matches");
 
         // union the results
         for (let matchResult of matchResults) {
-          let key = process.platform == 'win32' ? matchResult.toUpperCase() : matchResult;
+          let key = process.platform == "win32" ? matchResult.toUpperCase() : matchResult;
           results[key] = matchResult;
         }
       } else {
@@ -210,28 +210,28 @@ export function findMatch(
         if (
           matchOptions.matchBase &&
           !im._isRooted(pattern) &&
-          (process.platform == 'win32' ? pattern.replace(/\\/g, '/') : pattern).indexOf('/') < 0
+          (process.platform == "win32" ? pattern.replace(/\\/g, "/") : pattern).indexOf("/") < 0
         ) {
           // do not root the pattern
-          tl.debug('matchBase and basename only');
+          tl.debug("matchBase and basename only");
         } else {
           // root the exclude pattern
           pattern = im._ensurePatternRooted(defaultRoot, pattern);
-          tl.debug(`after ensurePatternRooted, pattern: '${pattern}'`);
+          tl.debug(`after ensurePatternRooted, pattern: "${pattern}"`);
         }
 
         // apply the pattern
-        tl.debug('applying exclude pattern');
+        tl.debug("applying exclude pattern");
         let matchResults: string[] = minimatch.match(
           Object.keys(results).map((key: string) => results[key]),
           pattern,
           matchOptions
         );
-        tl.debug(matchResults.length + ' matches');
+        tl.debug(matchResults.length + " matches");
 
         // substract the results
         for (let matchResult of matchResults) {
-          let key = process.platform == 'win32' ? matchResult.toUpperCase() : matchResult;
+          let key = process.platform == "win32" ? matchResult.toUpperCase() : matchResult;
           delete results[key];
         }
       }
@@ -241,7 +241,7 @@ export function findMatch(
   let finalResult: string[] = Object.keys(results)
     .map((key: string) => results[key])
     .sort();
-  tl.debug(finalResult.length + ' final results');
+  tl.debug(finalResult.length + " final results");
   return finalResult;
 }
 
@@ -254,7 +254,7 @@ export function findMatch(
  */
 export function find(findPath: string, options?: tl.FindOptions): string[] {
   if (!findPath) {
-    tl.debug('no path specified');
+    tl.debug("no path specified");
     return [];
   }
 
@@ -263,7 +263,7 @@ export function find(findPath: string, options?: tl.FindOptions): string[] {
   findPath = path.normalize(findPath);
 
   // debug trace the parameters
-  tl.debug(`findPath: '${findPath}'`);
+  tl.debug(`findPath: "${findPath}"`);
   options = options || _getDefaultFindOptions();
   _debugFindOptions(options);
 
@@ -271,8 +271,8 @@ export function find(findPath: string, options?: tl.FindOptions): string[] {
   try {
     fs.lstatSync(findPath);
   } catch (err) {
-    if (err.code == 'ENOENT') {
-      tl.debug('0 results');
+    if (err.code == "ENOENT") {
+      tl.debug("0 results");
       return [];
     }
 
@@ -301,7 +301,7 @@ export function find(findPath: string, options?: tl.FindOptions): string[] {
           // use stat (following all symlinks)
           stats = fs.statSync(item.path);
         } catch (err) {
-          if (err.code == 'ENOENT' && options.allowBrokenSymbolicLinks) {
+          if (err.code == "ENOENT" && options.allowBrokenSymbolicLinks) {
             // fallback to lstat (broken symlinks allowed)
             stats = fs.lstatSync(item.path);
             tl.debug(`  ${item.path} (broken symlink)`);
@@ -314,7 +314,7 @@ export function find(findPath: string, options?: tl.FindOptions): string[] {
           // use stat (following symlinks for the specified path and this is the specified path)
           stats = fs.statSync(item.path);
         } catch (err) {
-          if (err.code == 'ENOENT' && options.allowBrokenSymbolicLinks) {
+          if (err.code == "ENOENT" && options.allowBrokenSymbolicLinks) {
             // fallback to lstat (broken symlinks allowed)
             stats = fs.lstatSync(item.path);
             tl.debug(`  ${item.path} (broken symlink)`);
@@ -342,7 +342,7 @@ export function find(findPath: string, options?: tl.FindOptions): string[] {
 
           // test for a cycle
           if (traversalChain.some((x: string) => x == realPath)) {
-            tl.debug('    cycle detected');
+            tl.debug("    cycle detected");
             continue;
           }
 
@@ -366,7 +366,7 @@ export function find(findPath: string, options?: tl.FindOptions): string[] {
     tl.debug(`${result.length} results`);
     return result;
   } catch (err) {
-    throw new Error(tl.loc('LIB_OperationFailed', 'find', err.message));
+    throw new Error(tl.loc("LIB_OperationFailed", "find", err.message));
   }
 }
 

@@ -1,15 +1,15 @@
-import * as tl from 'azure-pipelines-task-lib/task';
+import * as tl from "azure-pipelines-task-lib/task";
 
 export const PROP_NAMES = {
-  HOST_URL: 'sonar.host.url',
-  LOGIN: 'sonar.login',
-  PASSSWORD: 'sonar.password',
-  ORG: 'sonar.organization',
-  PROJECTKEY: 'sonar.projectKey',
-  PROJECTNAME: 'sonar.projectName',
-  PROJECTVERSION: 'sonar.projectVersion',
-  PROJECTSOURCES: 'sonar.sources',
-  PROJECTSETTINGS: 'project.settings'
+  HOST_URL: "sonar.host.url",
+  LOGIN: "sonar.login",
+  PASSSWORD: "sonar.password",
+  ORG: "sonar.organization",
+  PROJECTKEY: "sonar.projectKey",
+  PROJECTNAME: "sonar.projectName",
+  PROJECTVERSION: "sonar.projectVersion",
+  PROJECTSOURCES: "sonar.sources",
+  PROJECTSETTINGS: "project.settings"
 };
 
 export function toCleanJSON(props: { [key: string]: string | undefined }) {
@@ -26,5 +26,5 @@ export function setIfNotEmpty(props: { [key: string]: string }, key: string, val
 }
 
 export function isWindows() {
-  return tl.osType().match(/^Win/);
+  return tl.getPlatform() === 0;
 }
