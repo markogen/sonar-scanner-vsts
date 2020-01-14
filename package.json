@@ -36,8 +36,8 @@
     "prettier": "^1.19.1",
     "request": "^2.88.0",
     "semver": "^5.7.1",
-    "sonarqube-scanner": "^2.5.0",
-    "tfx-cli": "^0.7.11",
+    "sonarqube-scanner": "2.5.0",
+    "tfx-cli": "0.7.11",
     "tmp": "0.0.33",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.4",
@@ -91,7 +91,7 @@
   },
   "prettier": {
     "printWidth": 100,
-    "singleQuote": true
+    "singleQuote": false
   },
   "dependencies": {
     "azure-pipelines-task-lib": "^2.9.3"
