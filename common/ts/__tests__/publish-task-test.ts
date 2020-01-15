@@ -74,7 +74,7 @@ it("check multiple report status and set global quality gate for build propertie
     null
   );
 
-  jest.spyOn(request, "getServerVersion").mockReturnValue(new SemVer("7.2.0"));
+  jest.spyOn(request, "getServerVersion").mockResolvedValue(new SemVer("7.2.0"));
 
   jest.spyOn(Analysis, "getAnalysis").mockResolvedValue(returnedAnalysisOk);
   jest.spyOn(Analysis, "getAnalysis").mockResolvedValue(returnedAnalysisOk);
@@ -146,7 +146,7 @@ it("check multiple report status and set global quality gate for build propertie
     null,
     null
   );
-  jest.spyOn(request, "getServerVersion").mockReturnValue(new SemVer("7.2.0"));
+  jest.spyOn(request, "getServerVersion").mockResolvedValue(new SemVer("7.2.0"));
 
   jest.spyOn(Analysis, "getAnalysis").mockResolvedValueOnce(returnedAnalysisOk);
   jest.spyOn(Analysis, "getAnalysis").mockResolvedValueOnce(returnedAnalysisError);
@@ -275,7 +275,7 @@ it("task should not fail the task even if all ceTasks timeout", async () => {
   jest.spyOn(tl, "debug").mockImplementation(() => null);
   jest.spyOn(tl, "warning").mockImplementation(() => null);
 
-  jest.spyOn(request, "getServerVersion").mockReturnValue(new SemVer("7.2.0"));
+  jest.spyOn(request, "getServerVersion").mockResolvedValue(new SemVer("7.2.0"));
 
   tl.setVariable("SONARQUBE_SCANNER_PARAMS", "anything...");
   tl.setVariable("SONARQUBE_ENDPOINT", SC_ENDPOINT.toJson());
