@@ -1,13 +1,13 @@
 {
   "id": "96844cf3-42d4-420f-b7e4-e884edfe3ef5",
-  "name": "GPSonarQubeAnalyze",
+  "name": "MGSonarQubeAnalyze",
   "friendlyName": "Run Code Analysis",
   "description": "Run scanner and upload the results to the SonarQube server.",
   "helpMarkDown":
     "This task is not needed for Maven and Gradle projects since the scanner should be run as part of the build.\n\n[More Information](http://redirect.sonarsource.com/doc/install-configure-scanner-tfs-ts.html)",
   "category": "Build",
   "visibility": ["Build"],
-  "author": "GenePlanet",
+  "author": "markogen",
   "version": {
     "Major": 4,
     "Minor": 9,

@@ -2,7 +2,7 @@
   "name": "publish",
   "version": "4.0.0",
   "description": "SonarQube Task Publish",
-  "author": "GenePlanet",
+  "author": "markogen",
   "license": "LGPL-3.0",
   "dependencies": {
     "azure-pipelines-task-lib": "^2.8.0"

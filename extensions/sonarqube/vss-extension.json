@@ -1,13 +1,13 @@
 {
   "manifestVersion": 1,
-  "id": "gp-sonarqube",
-  "name": "GP-SonarQube",
+  "id": "mg-sonarqube",
+  "name": "MG-SonarQube",
   "version": "4.9.0",
   "branding": {
     "color": "rgb(67, 157, 210)",
     "theme": "dark"
   },
-  "publisher": "GenePlanet",
+  "publisher": "markogen",
   "homepage": "https://www.sonarqube.org/",
   "targets": [
     {
@@ -95,8 +95,8 @@
       "type": "ms.vss-endpoint.service-endpoint-type",
       "targets": ["ms.vss-endpoint.endpoint-types"],
       "properties": {
-        "name": "gp-sonarqube",
-        "displayName": "GP-SonarQube",
+        "name": "mg-sonarqube",
+        "displayName": "MG-SonarQube",
         "icon": "icons/SonarQube_endpoint.png",
         "url": {
           "displayName": "Server Url",

@@ -1,6 +1,6 @@
 {
   "id": "9914c376-55d3-4bef-a74f-b1c5134617fd",
-  "name": "GPSonarQubePublish",
+  "name": "MGSonarQubePublish",
   "friendlyName": "Publish Quality Gate Result",
   "description":
     "Publish SonarQube's Quality Gate result on the Azure DevOps build result, to be used after the actual analysis.",
@@ -8,7 +8,7 @@
     "[More Information](http://redirect.sonarsource.com/doc/install-configure-scanner-tfs-ts.html)",
   "category": "Build",
   "visibility": ["Build"],
-  "author": "GenePlanet",
+  "author": "markogen",
   "version": {
     "Major": 4,
     "Minor": 8,

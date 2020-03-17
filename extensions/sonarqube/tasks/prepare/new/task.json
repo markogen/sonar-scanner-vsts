@@ -1,13 +1,13 @@
 {
   "id": "75433071-8c77-4432-af66-601fc377ac86",
-  "name": "GPSonarQubePrepare",
+  "name": "MGSonarQubePrepare",
   "friendlyName": "Prepare Analysis Configuration",
   "description": "Prepare SonarQube analysis configuration",
   "helpMarkDown":
     "[More Information](http://redirect.sonarsource.com/doc/install-configure-scanner-tfs-ts.html)",
   "category": "Build",
   "visibility": ["Build"],
-  "author": "GenePlanet",
+  "author": "markogen",
   "version": {
     "Major": 4,
     "Minor": 9,
