@@ -1,5 +1,5 @@
 {
-  "id": "96844cf3-42d4-420f-b7e4-e884edfe3ef5",
+  "id": "400a35e6-3ba8-4ee8-9490-118a831b19c8",
   "name": "MGSonarQubeAnalyze",
   "friendlyName": "Run Code Analysis",
   "description": "Run scanner and upload the results to the SonarQube server.",

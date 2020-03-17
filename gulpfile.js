@@ -65,22 +65,6 @@ gulp.task('extension:copy', () =>
   ).pipe(gulp.dest(paths.build.extensions.root))
 );
 
-gulp.task('tasks:old:copy', () =>
-  gulp.src(pathAllFiles(paths.extensions.tasks.old)).pipe(gulp.dest(paths.build.extensions.root))
-);
-
-gulp.task('tasks:old:common', () => {
-  let commonPipe = gulp.src(pathAllFiles(paths.common.old));
-  globby.sync(paths.extensions.tasks.old, { nodir: false }).forEach(dir => {
-    commonPipe = commonPipe.pipe(
-      gulp.dest(path.join(paths.build.extensions.root, path.relative(paths.extensions.root, dir)))
-    );
-  });
-  return commonPipe;
-});
-
-gulp.task('tasks:old:bundle', gulp.series('tasks:old:copy', 'tasks:old:common'));
-
 gulp.task('npminstall', () =>
   gulp
     .src([
@@ -232,7 +216,6 @@ gulp.task(
   'copy',
   gulp.series(
     'extension:copy',
-    'tasks:old:bundle',
     'tasks:new:bundle',
     'tasks:icons',
     'tasks:version',

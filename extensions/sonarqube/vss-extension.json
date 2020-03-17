@@ -66,7 +66,7 @@
   "scopes": ["vso.build", "vso.code", "vso.test"],
   "contributions": [
     {
-      "id": "75433071-8c77-4432-af66-601fc377ac86",
+      "id": "51b9809c-9633-4662-a047-5c52d52b07b6",
       "type": "ms.vss-distributed-task.task",
       "targets": ["ms.vss-distributed-task.tasks"],
       "properties": {
@@ -74,7 +74,7 @@
       }
     },
     {
-      "id": "96844cf3-42d4-420f-b7e4-e884edfe3ef5",
+      "id": "400a35e6-3ba8-4ee8-9490-118a831b19c8",
       "type": "ms.vss-distributed-task.task",
       "targets": ["ms.vss-distributed-task.tasks"],
       "properties": {
@@ -82,7 +82,7 @@
       }
     },
     {
-      "id": "9914c376-55d3-4bef-a74f-b1c5134617fd",
+      "id": "3158e64e-3126-455c-bf7e-6c7c901f1495",
       "type": "ms.vss-distributed-task.task",
       "targets": ["ms.vss-distributed-task.tasks"],
       "properties": {
