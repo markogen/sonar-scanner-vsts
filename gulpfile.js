@@ -192,12 +192,6 @@ gulp.task('scanner:copy', () => {
       'prepare',
       'new',
       'classic-sonar-scanner-msbuild'
-    ),
-    path.join(
-      paths.build.extensions.sonarcloudTasks,
-      'prepare',
-      'new',
-      'classic-sonar-scanner-msbuild'
     )
   ];
 
@@ -207,19 +201,12 @@ gulp.task('scanner:copy', () => {
       'prepare',
       'new',
       'dotnet-sonar-scanner-msbuild'
-    ),
-    path.join(
-      paths.build.extensions.sonarcloudTasks,
-      'prepare',
-      'new',
-      'dotnet-sonar-scanner-msbuild'
     )
   ];
 
   const cliFolders = [
     path.join(paths.build.extensions.sonarqubeTasks, 'scanner-cli', 'old', 'sonar-scanner'),
-    path.join(paths.build.extensions.sonarqubeTasks, 'analyze', 'new', 'sonar-scanner'),
-    path.join(paths.build.extensions.sonarcloudTasks, 'analyze', 'new', 'sonar-scanner')
+    path.join(paths.build.extensions.sonarqubeTasks, 'analyze', 'new', 'sonar-scanner')
   ];
   let scannerPipe = gulp.src(pathAllFiles(paths.build.classicScanner));
   scannerFolders.forEach(dir => {
@@ -444,7 +431,7 @@ gulp.task('burgr', () => {
     return gutil.noop;
   }
   const packageVersion = fullVersion(packageJSON.version);
-  const urls = ['sonarqube', 'sonarcloud'].map(variant => `${process.env.ARTIFACTORY_URL}/sonarsource/org/sonarsource/scanner/vsts/sonar-scanner-vsts/${packageVersion}/sonar-scanner-vsts-${packageVersion}-${variant}.vsix`).join(',');
+  const urls = ['sonarqube'].map(variant => `${process.env.ARTIFACTORY_URL}/sonarsource/org/sonarsource/scanner/vsts/sonar-scanner-vsts/${packageVersion}/sonar-scanner-vsts-${packageVersion}-${variant}.vsix`).join(',');
   return request
     .post(
       {
