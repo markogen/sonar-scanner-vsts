@@ -2,7 +2,7 @@
   "name": "common",
   "version": "4.0.0",
   "description": "SonarQube/SonarCloud Extension Tasks Common",
-  "author": "SonarSource",
+  "author": "GenePlanet",
   "license": "LGPL-3.0",
   "dependencies": {
     "azure-devops-node-api": "^9.0.1",
