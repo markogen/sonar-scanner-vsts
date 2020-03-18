@@ -1,6 +1,6 @@
 {
   "name": "publish",
-  "version": "4.0.0",
+  "version": "5.0.2",
   "description": "SonarQube Task Publish",
   "author": "markogen",
   "license": "LGPL-3.0",

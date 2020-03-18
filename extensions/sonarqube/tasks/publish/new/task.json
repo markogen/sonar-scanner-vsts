@@ -10,9 +10,9 @@
   "visibility": ["Build"],
   "author": "markogen",
   "version": {
-    "Major": 4,
-    "Minor": 8,
-    "Patch": 1
+    "Major": 5,
+    "Minor": 0,
+    "Patch": 2
   },
   "minimumAgentVersion": "1.95.1",
   "inputs": [

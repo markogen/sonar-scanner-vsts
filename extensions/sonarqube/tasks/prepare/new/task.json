@@ -9,9 +9,9 @@
   "visibility": ["Build"],
   "author": "markogen",
   "version": {
-    "Major": 4,
-    "Minor": 9,
-    "Patch": 0
+    "Major": 5,
+    "Minor": 0,
+    "Patch": 2
   },
   "releaseNotes":
     "* __Support non MSBuild projects:__ This task can be used to configure analysis also for non MSBuild projects.",
@@ -27,7 +27,7 @@
   "inputs": [
     {
       "name": "SonarQube",
-      "type": "connectedService:sonarqube",
+      "type": "connectedService:mg-sonarqube",
       "label": "SonarQube Server Endpoint",
       "required": true,
       "helpMarkDown":

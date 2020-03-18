@@ -1,6 +1,6 @@
 {
   "name": "sonar-scanner-vsts",
-  "version": "0.0.3-SNAPSHOT",
+  "version": "0.0.6-SNAPSHOT",
   "repository": "SonarSource/sonar-scanner-vsts",
   "license": "LGPL-3.0",
   "devDependencies": {

@@ -31,7 +31,6 @@ exports.paths = {
     dotnetScanner: path.join(buildPath, 'tmp', 'dotnet-sonar-scanner-msbuild')
   },
   common: {
-    old: path.join(commonPath, 'powershell'),
     new: path.join(commonPath, 'ts')
   },
   extensions: {

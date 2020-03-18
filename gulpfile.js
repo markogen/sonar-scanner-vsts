@@ -170,7 +170,6 @@ gulp.task('scanner:download', () => {
 
 gulp.task('scanner:copy', () => {
   const scannerFolders = [
-    path.join(paths.build.extensions.sonarqubeTasks, 'prepare', 'old', 'SonarQubeScannerMsBuild'),
     path.join(
       paths.build.extensions.sonarqubeTasks,
       'prepare',
@@ -189,7 +188,6 @@ gulp.task('scanner:copy', () => {
   ];
 
   const cliFolders = [
-    path.join(paths.build.extensions.sonarqubeTasks, 'scanner-cli', 'old', 'sonar-scanner'),
     path.join(paths.build.extensions.sonarqubeTasks, 'analyze', 'new', 'sonar-scanner')
   ];
   let scannerPipe = gulp.src(pathAllFiles(paths.build.classicScanner));

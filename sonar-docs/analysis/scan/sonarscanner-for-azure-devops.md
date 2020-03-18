@@ -5,25 +5,14 @@ url: /analysis/scan/sonarscanner-for-azure-devops/
 
 
 [[info]]
-| By [SonarSource](https://www.sonarsource.com/) - GNU LGPL 3 - [Issue Tracker](https://jira.sonarsource.com/browse/VSTS) - [Source](https://github.com/SonarSource/sonar-scanner-vsts)  
+| By [SonarSource](https://www.sonarsource.com/) - GNU LGPL 3 - [Issue Tracker](https://jira.sonarsource.com/browse/VSTS) - [Source](https://github.com/markogen/sonar-scanner-vsts)
 | **SonarScanner for Azure DevOps**
 
-<!-- sonarcloud -->
-You can connect to SonarCloud using your Azure DevOps account. On the [login page](/#sonarcloud#/sessions/new), just click on the "Log in with Azure DevOps" button.
-
-[[warning]]
-| ![Warning](/images/exclamation.svg) Only work and school Azure DevOps accounts are authorized to login on SonarCloud.
-<!-- /sonarcloud -->
-
-The <!-- sonarqube -->[SonarQube](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarqube)<!-- /sonarqube --> <!-- sonarcloud -->[SonarCloud](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarcloud)<!-- /sonarcloud --> extension for Azure DevOps <!-- sonarqube -->Server<!-- /sonarqube --> makes it easy to integrate analysis into your build pipeline. The extension allows the analysis of all languages supported by {instance}.
-
-<!-- sonarcloud -->
-Microsoft has published a [dedicated lab](https://aka.ms/sonarcloudlab) describing how to integrate SonarCloud in Azure DevOps pipelines. The lab includes setting up a Branch Policy in Azure DevOps to block a Pull Request from being submitted if the changed code does not meet the quality bar, as well as setting up the newest pre-deployment gate available from 1.8+ version of the extension.
-<!-- /sonarcloud -->
+The <!-- sonarqube -->[SonarQube](https://marketplace.visualstudio.com/items?itemName=markogen.mg-sonarqube)<!-- /sonarqube --> extension for Azure DevOps <!-- sonarqube -->Server<!-- /sonarqube --> makes it easy to integrate analysis into your build pipeline. The extension allows the analysis of all languages supported by {instance}.
 
 <!-- sonarqube -->
 ## Compatibility
-Version 4.x is compatible with:
+Version 1.x is compatible with:
 * TFS 2017 Update 2+
 * TFS 2018
 * Azure DevOps Server 2019
@@ -32,7 +21,7 @@ Version 4.x is compatible with:
 The extension embeds its own version of the [SonarScanner for MSBuild](/analysis/scan/sonarscanner-for-msbuild/).
 
 ## Installation
-1. Install the extension <!-- sonarqube -->[from the marketplace](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarqube)<!-- /sonarqube --><!-- sonarcloud -->[from the marketplace](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarcloud)<!-- /sonarcloud -->. 
+1. Install the extension <!-- sonarqube -->[from the marketplace](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarqube)<!-- /sonarqube -->. 
 
 If you are using [Microsoft-hosted build agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops) then there is nothing else to install. The extension will work with all of the hosted agents (Windows, Linux, and MacOS).
 
@@ -45,9 +34,6 @@ In addition, make sure the appropriate build tools are installed on the agent fo
 <!-- sonarqube -->
 1. Specify a **Connection name**, the **Server URL** of your SonarQube Server (including the port if required) and the [Authentication Token](/user-guide/user-token/) to use.
 <!-- /sonarqube -->
-<!-- sonarcloud -->
-1. Specify a **Connection name** and **SonarCloud token**. There is a link in the dialog that will take you to the account security page on SonarCloud where you can create a new token if necessary. There is also a button that lets you verify that connection is correctly configured.
-<!-- /sonarcloud -->
 
 Each extension provides three tasks you will use in your build pipeline to analyze your projects:
 
@@ -58,7 +44,6 @@ Each extension provides three tasks you will use in your build pipeline to analy
    * This task is not required for Maven or Gradle projects, because scanner will be run as part of the Maven/Gradle build.
 * **Publish Quality Gate Result** task, to display the Quality Gate status in the build summary and give you a sense of whether the application is ready for production "quality-wise". 
   
-   <!-- sonarcloud -->* This task is required if you are using the SonarCloud quality gate status pre-deployment gate in a release pipeline, otherwise it is optional.<!-- /sonarcloud -->
    <!-- sonarqube -->* This task is optional <!-- sonarqube -->
    * It can significantly increase the overall build time because it will poll {instance} until the analysis is complete. Omitting this task will not affect the analysis results on {instance} - it simply means the Azure DevOps Build Summary page will not show the status of the analysis or a link to the project dashboard on {instance}.
  
@@ -67,17 +52,16 @@ When creating a build pipeline you can filter the list of available tasks by typ
 ## Analyzing a .NET solution
 1. In your build definition, add:
    * At least **Prepare analysis Configuration** task and **Run Code Analysis** task
-   * Optionally **Publish Quality Gate Result** task <!-- sonarcloud --> (required if you want to check the Quality Gate in a release pipeline). <!-- sonarcloud -->
+   * Optionally **Publish Quality Gate Result** task
 2. Reorder the tasks to respect the following order:
-   * **Prepare analysis on <!-- sonarcloud -->SonarCloud <!-- /sonarcloud --><!-- sonarqube -->SonarQube <!-- /sonarqube -->** task before any **MSBuild** or **Visual Studio Build** tasks.
+   * **Prepare analysis on <!-- sonarqube -->SonarQube <!-- /sonarqube -->** task before any **MSBuild** or **Visual Studio Build** tasks.
    * **Run Code Analysis** task after the **Visual Studio Test task**.
    * **Publish Quality Gate Result** task after the **Run Code Analysis** task
-3. Click on the **Prepare analysis on <!-- sonarcloud -->SonarCloud <!-- /sonarcloud --><!-- sonarqube -->SonarQube <!-- /sonarqube -->** build step to configure it:
+3. Click on the **Prepare analysis on <!-- sonarqube -->SonarQube <!-- /sonarqube -->** build step to configure it:
    * You must specify the service connection (i.e. {instance}) to use. You can:
       * select an existing endpoint from the drop down list
       * add a new endpoint
       * manage existing endpoints
-      <!-- sonarcloud -->* specify which **SonarCloud Organization** to use by choosing an organization from the drop-down<!-- /sonarcloud -->
    * Keep **Integrate with MSBuild** checked and specify at least the project key
       * **Project Key** - the unique project key in {instance}
       * **Project Name** - the name of the project in {instance}
@@ -89,16 +73,15 @@ Once all this is done, you can trigger a build.
 ## Analyzing a Java project with Maven or Gradle
 1. In your build definition, add:
    * At least **Prepare analysis Configuration** task
-   * Optionally **Publish Quality Gate Result** task <!-- sonarcloud --> (required if you want to check the Quality Gate in a release pipeline). <!-- sonarcloud -->
+   * Optionally **Publish Quality Gate Result** task
 1. Reorder the tasks to respect the following order:
-   * **Prepare analysis on <!-- sonarcloud -->SonarCloud <!-- /sonarcloud --><!-- sonarqube -->SonarQube <!-- /sonarqube -->** task before the **Maven** or **Gradle** task.
+   * **Prepare analysis on <!-- sonarqube -->SonarQube <!-- /sonarqube -->** task before the **Maven** or **Gradle** task.
    * **Publish Quality Gate Result** task after the **Maven** or **Gradle** task.
-1. Click on the **Prepare analysis on <!-- sonarcloud -->SonarCloud <!-- /sonarcloud --><!-- sonarqube -->SonarQube <!-- /sonarqube -->** task to configure it:
+1. Click on the **Prepare analysis on <!-- sonarqube -->SonarQube <!-- /sonarqube -->** task to configure it:
    * You must specify the service connection (i.e. {instance}) to use. You can:
       * select an existing endpoint from the drop down list
       * add a new endpoint
       * manage existing endpoints
-      <!-- sonarcloud -->* specify which **SonarCloud Organization** to use by choosing an organization from the drop-down<!-- /sonarcloud -->
    * Select **Integrate with Maven or Gradle**
 1. On the Maven or Gradle task, in **Code Analysis**, check **Run SonarQube or SonarCloud Analysis**
 
@@ -112,24 +95,23 @@ In your build pipeline, insert the following steps in the order they appear here
    * For the Microsoft-hosted build agent you will need to do it every time (as part of build pipeline), e.g. you can add **PowerShell script** task doing that. This can be done by inserting a **Command Line** task.\
      Example of PowerShell commands on a windows host:
      ```
-     Invoke-WebRequest -Uri '<sonarqube or sonarcloud url>/static/cpp/build-wrapper-win-x86.zip' -OutFile 'build-wrapper.zip'
+     Invoke-WebRequest -Uri '<sonarqube url>/static/cpp/build-wrapper-win-x86.zip' -OutFile 'build-wrapper.zip'
      Expand-Archive -Path 'build-wrapper.zip' -DestinationPath '.'
      ```
      Example of bash commands on a linux host:
      ```
-     curl '<sonarqube or sonarcloud url>/static/cpp/build-wrapper-linux-x86.zip' --output build-wrapper.zip
+     curl '<sonarqube url>/static/cpp/build-wrapper-linux-x86.zip' --output build-wrapper.zip
      unzip build-wrapper.zip
      ```
      Example of bash commands on a macos host:
      ```
-     curl '<sonarqube or sonarcloud url>/static/cpp/build-wrapper-macosx-x86.zip' --output build-wrapper.zip
+     curl '<sonarqube url>/static/cpp/build-wrapper-macosx-x86.zip' --output build-wrapper.zip
      unzip build-wrapper.zip
      ```  
    * For the self-hosted build agent you can either download it everytime (using the same scripts) or only once (as part of manual setup of build agent).
 2. Add a **Prepare analysis Configuration** task and configure it as follow:\
-   Click on the **Prepare analysis on <!-- sonarcloud -->SonarCloud <!-- /sonarcloud --><!-- sonarqube -->SonarQube <!-- /sonarqube -->** task to configure it:
-   * Select the <!-- sonarcloud -->**SonarCloud Service Endpoint**<!-- /sonarcloud --><!-- sonarqube -->**SonarQube Server**<!-- /sonarqube -->
-   <!-- sonarcloud -->* Select your SonarCloud organization<!-- /sonarcloud -->
+   Click on the **Prepare analysis on <!-- sonarqube -->SonarQube <!-- /sonarqube -->** task to configure it:
+   * Select the <!-- sonarqube -->**SonarQube Server**<!-- /sonarqube -->
    * In *Choose the way to run the analysis*, select *standalone scanner* (even if you build with *Visual Studio*/*MSBuild*) 
    * In *Additional Properties* in the *Advanced* section, add the property `sonar.cfamily.build-wrapper-output` with, as its value, the output directory to which the Build Wrapper should write its results: `sonar.cfamily.build-wrapper-output=<output directory>`
 3. Add a **Command Line** task to run your build.\
@@ -148,9 +130,9 @@ In your build pipeline, insert the following steps in the order they appear here
       ```
       build-wrapper-macosx-x86/build-wrapper-macos-x86 --out-dir <output directory> xcodebuild -project myproject.xcodeproj -configuration Release clean build
       ```
-4. Add a **Run Code Analysis** task to run the code analysis and make the results available to <!-- sonarcloud -->SonarCloud<!-- /sonarcloud --><!-- sonarqube -->SonarQube<!-- /sonarqube -->.\
+4. Add a **Run Code Analysis** task to run the code analysis and make the results available to <!-- sonarqube -->SonarQube<!-- /sonarqube -->.\
    Consider running this task right after the previous one as the build environment should not be significantly altered before running the analysis. 
-5. Optionally, add a **Publish Quality Gate Result** task <!-- sonarcloud --> (required if you want to check the Quality Gate in a release pipeline). <!-- sonarcloud -->
+5. Optionally, add a **Publish Quality Gate Result** task
 
 Once all this is done, you can trigger a build.
 
@@ -161,12 +143,11 @@ If you are not developing a .NET application or a Java project, here is the stan
    * At least **Prepare analysis Configuration** task and **Run Code Analysis** task
    * Optionally **Publish Quality Gate Result** task (required if you want to check the Quality Gate in a release pipeline).
 2. Reorder the tasks to respect the following order:
-   1. **Prepare analysis on <!-- sonarcloud -->SonarCloud <!-- /sonarcloud --><!-- sonarqube -->SonarQube <!-- /sonarqube -->**
+   1. **Prepare analysis on <!-- sonarqube -->SonarQube <!-- /sonarqube -->**
    2. **Run Code Analysis**
    3. **Publish Quality Gate Result**
-3. Click on the **Prepare analysis on <!-- sonarcloud -->SonarCloud <!-- /sonarcloud --><!-- sonarqube -->SonarQube <!-- /sonarqube -->** task to configure it:
-   * Select the <!-- sonarcloud -->**SonarCloud Service Endpoint**<!-- /sonarcloud --><!-- sonarqube -->**SonarQube Server**<!-- /sonarqube -->
-   <!-- sonarcloud -->* Select your SonarCloud organization<!-- /sonarcloud -->
+3. Click on the **Prepare analysis on <!-- sonarqube -->SonarQube <!-- /sonarqube -->** task to configure it:
+   * Select the <!-- sonarqube -->**SonarQube Server**<!-- /sonarqube -->
    * Select **Use standalone scanner**
    * Then:
       * Either the Sonar properties are stored in the (standard) `sonar-project.properties` file in your SCM, and you just have to make sure that "Settings File" correctly points at it. This is the recommended way.
@@ -176,15 +157,18 @@ Once all this is done, you can trigger a build.
 
 ## Branch and Pull Request analysis
 <!-- sonarqube -->
-_Branch and Pull Request analysis are available as part of [Developer Edition](https://redirect.sonarsource.com/editions/developer.html) and [above](https://www.sonarsource.com/plans-and-pricing/)_
+_Branch and Pull Request analysis are normaly available as part of [Developer Edition](https://redirect.sonarsource.com/editions/developer.html) and [above](https://www.sonarsource.com/plans-and-pricing/)_
+However this extension allows analysis of any branch on [Community Edition](https://redirect.sonarsource.com/editions/community.html) but the analysis will always be pusblished as project's master branch!
 <!-- /sonarqube -->
 
 ### Branches
-When a build is run on a branch of your project, the extension automatically configures the analysis to be pushed to the relevant project branch in {instance}. The same build pipeline can apply to all your branches, whatever type of Git repository you are analyzing,
+Build may run on any branch of your project. The extension will ignore branch information and will always push the analysis to the project's master branch in {instance}. The same build pipeline can apply to all your branches, whatever type of Git repository you are analyzing.
 
-If you are working with branches on TFVC projects, you still need to manually specify the branch to be used on {instance}: in the **Prepare analysis Configuration** task, in the **Additional Properties**, you need to set `sonar.branch.name`.
+Take special care not to run analysis on multiple branches, since every analysis on any branch will overide the single instance analysis on SonarQube server - project's master branch.
 
 ### PRs
+_Not recommended with this SonarScanner extension!! This extension will only publish analysis on project's master branch. Usually no PR is ever made to pull from master to some other branch. But in case if it is, the analysis on {instance} project's master branch could in fact be of some other branch!
+
 {instance} can analyze the code of the new features and annotate your pull requests in Azure DevOps with comments to highlight issues that were found.
 
 Pull request analysis is supported for any type of Git repositories. 
@@ -196,7 +180,7 @@ _The Microsoft documentation on setting up build validation for Azure Git is [he
 
 1. In the **Branch policies** page of your main development branches (e.g. "master"), add a build policy that runs your build pipeline
 2. Create an Azure DevOps token with "Code (read and write)" scope
-3. <!-- sonarqube -->In SonarQube, in the **[Administration > General Settings > Pull Requests](/#sonarqube-admin#/admin/settings?category=pull_request)** page,<!-- /sonarqube --><!-- sonarcloud -->In SonarCloud, set this token in the  **Azure DevOps** section, under **Administration**, **General Settings**, then **Pull Requests**<!-- /sonarcloud -->
+3. <!-- sonarqube -->In SonarQube, in the **[Administration > General Settings > Pull Requests](/#sonarqube-admin#/admin/settings?category=pull_request)** page,<!-- /sonarqube -->
 
 Next time some code is pushed in the branch of a pull request, the build pipeline will execute a scan on the code and publish the results in {instance} which will decorate the pull request in Azure DevOps.
 
@@ -211,14 +195,11 @@ After the first analysis on a pull request (this is important because however, y
 
 This feature will, after with the build pipeline execution, check the Quality Gate status of the current commit on the Pull Request before being able to merge it.
 
-<!-- sonarcloud -->
-* **Using pull request validation trigger (for GitHub and Bitbucket Cloud)**
-<!-- /sonarcloud -->
 <!-- sonarqube -->
 * **Using pull request validation trigger (for GitHub Enterprise and Bitbucket Server)**
 <!-- /sonarqube -->
 
-If you want to activate the Pull Request analysis for <!-- sonarqube -->GitHub Enterprise or Bitbucket Server<!-- /sonarqube --><!-- sonarcloud -->GitHub or Bitbucket Cloud<!-- /sonarcloud --> :
+If you want to activate the Pull Request analysis for <!-- sonarqube -->GitHub Enterprise or Bitbucket Server<!-- /sonarqube --> :
 
 1. **Edit** your build pipeline
 2. Go to the **Triggers** tab
@@ -260,7 +241,7 @@ You can monitor the Quality Gate status of your projects directly in your Azure 
 
 ## FAQ
 **Is it possible to trigger analyses on Linux or macOS agents?**  
-This becomes possible from version <!-- sonarqube -->4.0 of the SonarQube task<!-- /sonarqube --><!-- sonarcloud -->1.0 of the SonarCloud extension<!-- /sonarcloud -->, in which the extension was fully rewritten in Node.js. The mono dependency was dropped in version <!-- sonarqube -->4.3<!-- /sonarqube --><!-- sonarcloud -->1.3<!-- /sonarcloud -->.
+This becomes possible from version <!-- sonarqube -->1.0 of the SonarQube task<!-- /sonarqube -->, in which the extension was fully rewritten in Node.js. The mono dependency was dropped in version <!-- sonarqube -->4.3<!-- /sonarqube -->.
 
 This is not possible with previous versions of the extension.
 
